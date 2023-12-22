@@ -1,14 +1,14 @@
 # goplay
-cmd tool to upload your code to go playground server, see https://github.com/golang/playground to learn more about playground server.
+cmd tool to interact with go playground server, see https://github.com/golang/playground to learn more about playground server.
 
-default go playground server is play.golang.org if no address printed. 
+default go playground server is play.golang.org if no address provided. 
 
 ## install
 install cmd tool
 ```bash
 $ go install github.com/246859/goplay/cmd/goplay@latest
 ```
-you can also import goplay to use the client
+you can also import goplay to use the client directly
 ```bash
 $ go get -u github.com/246859/goplay@latest
 ```
@@ -48,6 +48,12 @@ Use "goplay [command] --help" for more information about a command.
 health check
 ```bash
 $ goplay health
+ok
+```
+
+specify target
+```bash
+$ goplay -d https://play.golang.org health
 ok
 ```
 
