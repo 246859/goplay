@@ -31,9 +31,9 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.Flags().BoolVarP(&ShowVersion, "version", "v", false, "show version")
 
-	rootCmd.LocalFlags().StringVarP(&Address, "address", "d", goplay.DefaultPlayground, "specified the go playground address")
-	rootCmd.LocalFlags().StringVarP(&Address, "proxy", "p", "", "proxy address")
-	rootCmd.LocalFlags().DurationVarP(&Timeout, "timeout", "t", time.Second*20, "http request timeout")
+	rootCmd.PersistentFlags().StringVarP(&Address, "address", "d", goplay.DefaultPlayground, "specified the go playground address")
+	rootCmd.PersistentFlags().StringVarP(&Proxy, "proxy", "p", "", "proxy address")
+	rootCmd.PersistentFlags().DurationVarP(&Timeout, "timeout", "t", time.Second*20, "http request timeout")
 	// subcommands
 	rootCmd.AddCommand(
 		VersionCmd,
