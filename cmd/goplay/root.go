@@ -22,7 +22,11 @@ var rootCmd = &cobra.Command{
 	Long:         "cmd tool to interact with go playground server,\nsee https://github.com/golang/playground to learn more about playground server.",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if ShowVersion {
-			os.Stdout.WriteString(AppVersion)
+			if len(AppVersion) == 0 {
+				os.Stdout.WriteString("v1.0.1")
+			} else {
+				os.Stdout.WriteString(AppVersion)
+			}
 		}
 		return nil
 	},
