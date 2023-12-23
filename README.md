@@ -1,7 +1,7 @@
 # goplay
 cmd tool to interact with go playground server, see https://github.com/golang/playground to learn more about playground server.
 
-default go playground server is play.golang.org if no address provided. 
+use server `play.golang.org` by default if no address provided. 
 
 ## install
 install cmd tool
@@ -19,18 +19,18 @@ help
 ```bash
 $ goplay -h
 cmd tool to interact with go playground server,
-see https://github.com/golang/playground to learn more about playground server.
+see https://github.com/246859/goplay to learn more about goplay
 
 Usage:
-  goplay [commands] [flags]
+  goplay [flags]
   goplay [command]
 
 Available Commands:
-  compile     compile and run code snippet
   completion  Generate the autocompletion script for the specified shell
   fmt         fmt code snippet
   health      check whether the playground server is healthy
   help        Help about any command
+  run         compile and run code snippet in playground
   share       share your code to go playground
   version     get go version of the playground server
   view        view the specified code snippet
@@ -40,7 +40,7 @@ Flags:
   -h, --help               help for goplay
   -p, --proxy string       proxy address
   -t, --timeout duration   http request timeout (default 20s)
-  -v, --version            show version
+  -v, --version            show goplay version
 
 Use "goplay [command] --help" for more information about a command.
 ```
@@ -51,7 +51,7 @@ $ goplay health
 ok
 ```
 
-specify target
+specify target server
 ```bash
 $ goplay -d https://play.golang.org health
 ok
@@ -67,7 +67,7 @@ version: go1.21.4
 
 share your local code to playground
 ```bash
-$ goplay share -f main.go
+$ goplay share main.go
 T9_8fv9CyRh
 ```
 
