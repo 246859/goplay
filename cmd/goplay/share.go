@@ -3,42 +3,41 @@ package main
 import (
 	"errors"
 	"github.com/spf13/cobra"
+	"io"
 	"os"
-	"unsafe"
-)
-
-var (
-	File string
 )
 
 var ShareCmd = &cobra.Command{
 	Use:     "share",
 	Short:   "share your code to go playground",
 	Long:    "share your code to go playground, use the -f to share specific file, \nuse the -r to share specific raw content.",
-	Example: "  goplay share -f main.go",
-	Args:    cobra.MaximumNArgs(1),
+	Example: "  goplay share xxx.go xxx.go",
 	RunE:    DoShare,
 }
 
-func init() {
-	ShareCmd.Flags().StringVarP(&File, "file", "f", "", "specified file to share")
-}
-
 func DoShare(cmd *cobra.Command, args []string) error {
-	if len(args) == 0 && len(File) == 0 {
-		return errors.New("no code snippet provided")
-	}
 
-	var content []byte
-	if len(args) > 0 {
-		s := args[0]
-		content = unsafe.Slice(unsafe.StringData(s), len(s))
-	} else {
-		bytes, err := os.ReadFile(File)
+	var content [][]byte
+	stat, _ := os.Stdin.Stat()
+	// pipeline mode
+	if stat.Mode()&os.ModeNamedPipe == os.ModeNamedPipe {
+		all, err := io.ReadAll(os.Stdin)
 		if err != nil {
 			return err
 		}
-		content = bytes
+		content = append(content, all)
+	} else if len(args) > 0 {
+		for _, arg := range args {
+			bytes, err := os.ReadFile(arg)
+			if err != nil {
+				return err
+			}
+			content = append(content, bytes)
+		}
+	}
+
+	if len(content) == 0 {
+		return errors.New("no code snippet provided")
 	}
 
 	client, err := NewClient()
@@ -46,10 +45,15 @@ func DoShare(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	snippetId, err := client.Share(content)
-	if err != nil {
-		return err
+	for i, bytes := range content {
+		snippetId, err := client.Share(bytes)
+		if err != nil {
+			return err
+		}
+		os.Stdout.WriteString(snippetId)
+		if i != len(content)-1 {
+			os.Stdout.WriteString("\n")
+		}
 	}
-	os.Stdout.WriteString(snippetId)
 	return nil
 }

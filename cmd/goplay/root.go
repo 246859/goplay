@@ -18,12 +18,13 @@ var (
 
 var rootCmd = &cobra.Command{
 	SilenceUsage: true,
-	Use:          "goplay [commands] [flags]",
-	Long:         "cmd tool to interact with go playground server,\nsee https://github.com/golang/playground to learn more about playground server.",
+	Use:          "goplay",
+	Long: "cmd tool to interact with go playground server,\n" +
+		"see https://github.com/246859/goplay to learn more about goplay",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if ShowVersion {
 			if len(AppVersion) == 0 {
-				os.Stdout.WriteString("v1.0.1")
+				os.Stdout.WriteString("v1.1.1")
 			} else {
 				os.Stdout.WriteString(AppVersion)
 			}
@@ -33,7 +34,7 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.Flags().BoolVarP(&ShowVersion, "version", "v", false, "show version")
+	rootCmd.Flags().BoolVarP(&ShowVersion, "version", "v", false, "show goplay version")
 
 	rootCmd.PersistentFlags().StringVarP(&Address, "address", "d", goplay.DefaultPlayground, "specified the go playground address")
 	rootCmd.PersistentFlags().StringVarP(&Proxy, "proxy", "p", "", "proxy address")

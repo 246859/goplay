@@ -7,10 +7,11 @@ import (
 )
 
 var ViewCmd = &cobra.Command{
-	Use:   "view",
-	Short: "view the specified code snippet",
-	RunE:  DoView,
-	Args:  cobra.ExactArgs(1),
+	Use:     "view",
+	Short:   "view the specified code snippet",
+	Example: "  goplay view T9_8fv9CyRh",
+	RunE:    DoView,
+	Args:    cobra.ExactArgs(1),
 }
 
 func DoView(cmd *cobra.Command, args []string) error {
