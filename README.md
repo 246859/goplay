@@ -85,13 +85,22 @@ func main() {
 
 compile your local code in playground
 ```bash
-$ goplay compile -f main.go
+$ goplay run main.go
+#1
 hello goplay!
 ```
 
 you can compile with snippet id
 ```bash
-$ goplay compile -i T9_8fv9CyRh
+$ goplay run -i T9_8fv9CyRh
+#1
+hello goplay!
+```
+
+and work with pipeline
+```bash
+$ cat main.go | goplay run
+#1
 hello goplay!
 ```
 
@@ -120,4 +129,14 @@ func main() {
 	fmt.Println(string(bytes))
 }
 
+```
+output
+```
+package main
+
+import "fmt"
+
+func main() {
+        fmt.Println("hello goplay!")
+}
 ```
